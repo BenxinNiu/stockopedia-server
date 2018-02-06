@@ -1,4 +1,4 @@
-package MUN.DataFormatter;
+package MUN.MongoDocument;
 
 public class Transcation {
 

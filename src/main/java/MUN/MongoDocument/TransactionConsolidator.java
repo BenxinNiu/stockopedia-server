@@ -1,14 +1,12 @@
-package MUN.Controller;
-import MUN.DataFormatter.*;
-import org.springframework.beans.factory.annotation.Autowired;
+package MUN.MongoDocument;
+import MUN.MongoDocument.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.IndexDirection;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.web.bind.annotation.RestController;
 
 @Document(collection = "Transcation")
-public class transactionController {
+public class TransactionConsolidator {
 @Id
 private String id;
 private String userName;
@@ -17,7 +15,7 @@ private String date;
 private int pos;   //TODO add this in constructor??
 private Transcation transaction;
 
-    public transactionController(String id, String userName, String date, Transcation transaction) {
+    public TransactionConsolidator(String id, String userName, String date, Transcation transaction) {
         this.id = id;
         this.userName = userName;
         this.date = date;
