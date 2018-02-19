@@ -1,6 +1,7 @@
 package MUN.Controller;
 
 
+import MUN.MongoDocument.DailyPriceConsolidator;
 import MUN.Service.FetchPriceData;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -16,14 +17,11 @@ public class PriceController {
 
 
     @Autowired
-    private FetchPriceData fetcher;
+    private FetchPriceData subscriber;
 
   @RequestMapping("/historicalprice/{ticker}/{type}")
-    public List<String> getBatchPriceData(@PathVariable("ticker") String ticker, @PathVariable("type") String type){
-
-      return Arrays.asList(
-             ticker, type
-     );
+    public List<DailyPriceConsolidator> getBatchPriceData(@PathVariable("ticker") String ticker, @PathVariable("type") String type){
+    return this.subscriber.queryByType(ticker,type);
   }
 
 
