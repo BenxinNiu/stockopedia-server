@@ -34,7 +34,7 @@ QOptionContractsConsolidator query= new QOptionContractsConsolidator("option");
         case "eq" : byStrike=query.strike.eq(strike);
         default : byStrike=query.strike.eq(strike);
     }
-   return (List<OptionContractsConsolidator>) optionRepo.findAll(byTicker.and(byType.and(byStrike)));
+   return (List<OptionContractsConsolidator>) optionRepo.findAll(byStrike.and(byTicker));
 }
 
 }

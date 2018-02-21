@@ -21,14 +21,14 @@ public class OptionController {
     @Autowired
     FetchOption subscriber;
 
-    @RequestMapping("/options/{ticker}/{type}/strike/filter")
+    @RequestMapping("/options/{ticker}/{type}/{strike}/filter")
     public List<OptionContractsConsolidator> queryOptions (@PathVariable("ticker") String ticker,
                                                            @PathVariable("type") String type,
-                                                           @RequestParam(value ="price") double strike,
+                                                           @PathVariable("strike") double strike,
                                                            @RequestParam(value = "condition") String condition){
     List<OptionContractsConsolidator> result;
 
-    if(condition == "none"){
+    if(condition.equals("none")){
         result = subscriber.queryByType(ticker, type);
     }
     else{
