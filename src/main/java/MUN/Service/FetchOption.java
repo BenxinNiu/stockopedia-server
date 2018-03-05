@@ -1,9 +1,6 @@
 package MUN.Service;
-import MUN.MongoDocument.DailyPriceConsolidator;
 import MUN.MongoDocument.OptionContractsConsolidator;
-import MUN.MongoDocument.QDailyPriceConsolidator;
 import MUN.MongoDocument.QOptionContractsConsolidator;
-import MUN.MongoRepo.DailyPriceCollectionRepo;
 import MUN.MongoRepo.OptionContractsCollectionRepo;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import org.springframework.beans.factory.annotation.Autowired;

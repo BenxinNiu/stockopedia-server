@@ -21,7 +21,9 @@ public List<DailyPriceConsolidator> queryByType (String ticker,String snapshot_t
     BooleanExpression filterByTicker= query.ticker.eq(ticker);
     BooleanExpression filterByType= query.snapshot_type.eq(snapshot_type);
 
-    return (List<DailyPriceConsolidator>) priceRepo.findAll(filterByTicker.and(filterByType));
+     List<DailyPriceConsolidator> result = (List<DailyPriceConsolidator>) priceRepo.findAll(filterByTicker.and(filterByType));
+System.out.println(result.size());
+     return result;
 }
 
 public List<DailyPriceConsolidator> queryByPMF (String ticker, String snapshot_type, String condition, double price){
