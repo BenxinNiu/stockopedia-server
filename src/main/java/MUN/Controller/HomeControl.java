@@ -10,7 +10,7 @@ public class HomeControl{
 
     @RequestMapping("/home")
     public String index(){
-        return "hi";
+        return "resources/static/index.html";
     }
 
 }
