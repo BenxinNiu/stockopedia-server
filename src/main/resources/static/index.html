@@ -30,10 +30,17 @@ function drawChart() {
 }
 
    $("button").click(function(){
-        $.ajax({url: "http://localhost:8080/historicalprice/AAPL/prev_year", success: function(result){
-                $("#test").html(result);
-                }});
-                     console.log(result[0]);
+        $.ajax({
+              url: "/historicalprice/AAPL/prev_year",
+              type: "GET",
+              success: function(result){
+                console.log(result);
+                },
+              error:function(err){
+console.log(err);
+} 
+});
+
     });
         });
 
