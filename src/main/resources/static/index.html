@@ -22,7 +22,7 @@ function acquireData(ticker, type){
               var length = result.length;
               for(i=0;i<length;i++){
               getData.push([result[length-i-1].date,result[length-i-1].close]);
-               $("#cureve_chart").empty();
+              // $("#cureve_chart").empty();
                drawChart(getData);
                 } // forloop
               },
@@ -33,7 +33,9 @@ function acquireData(ticker, type){
 
       });
 }
+//default display
 
+acquireData("AAPL","tmp");
 function drawChart(getData) {
 
 var chart=  new google.visualization.LineChart(document.getElementById('curve_chart'));
@@ -53,20 +55,22 @@ var chart=  new google.visualization.LineChart(document.getElementById('curve_ch
     //Assign the right url to urlAddress by clicking different buttons
     $( "#current_year" ).click(function() {
 
- acquireData("AAPL","current_year")
+         acquireData("AAPL","current_year")
     });
 
     $( "#prev_year" ).click(function() {
 
-acquireData("AAPL","prev_year")
+         acquireData("AAPL","prev_year")
     });
 
      $( "#one_month" ).click(function(){
+         acquireData("AAPL","current_month")
 
         });
               //chart.clearChart();
 
     $( "#one_week" ).click(function() {
+         acquireData("AAPL","tmp");
 
       });
 
@@ -78,15 +82,20 @@ acquireData("AAPL","prev_year")
 
 
 </script>
-</head>
+    <head>
+        <link rel="stylesheet" href="index.css">
+
+   </head>
 <body>
-<head1>Stockopedia</head1>
+<h1>Stockopedia</h1>
 <div id="curve_chart" style="width: 900px; height: 500px"></div>
-    <div class="row_fluid">
-        <button id="current_year">Current Year</button>
-        <button id="prev_year">Previous Year</button>
-        <button id="one_week"> One Week</div>
-        <button id="one_month"> One Month</button>
+    <div class="btn-group container">
+        <div class="row">
+               <button id="current_year">Current Year</button>
+               <button id="prev_year">Previous Year</button>
+                <button id="one_week"> One Week</button>
+                <button id="one_month"> One Month</button>
+        </div>
     </div>
 
 </body>
