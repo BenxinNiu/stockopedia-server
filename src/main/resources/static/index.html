@@ -6,135 +6,73 @@
 
 $(document).ready(function(){
 
-    var getData= [['time','price']];
-    var urlAddress = "/historicalprice/AAPL/current_year";
+  google.charts.load('current', {'packages':['corechart']});
+  //google.charts.setOnLoadCallback(drawChart());
 
+    // var getData= [['time','price']];
+    // var urlAddress = "/historicalprice/AAPL/current_year";
+
+
+function acquireData(ticker, type){
+  $.ajax({
+            url: "/historicalprice/" +ticker +"/" + type,
+            type: "GET",
+            success: function(result){
+              var getData=[['time','price']];
+              var length = result.length;
+              for(i=0;i<length;i++){
+              getData.push([result[length-i-1].date,result[length-i-1].close]);
+               $("#cureve_chart").empty();
+               drawChart(getData);
+                } // forloop
+              },
+            error:function(err){
+              console.log("errorssss");
+            console.log(err);
+         }
+
+      });
+}
+
+function drawChart(getData) {
+
+var chart=  new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+  var options = {
+    title: 'Stock Price',
+    curveType: 'function',
+    legend: { position: 'bottom' }
+  };
+
+  chart.clearChart();
+
+  chart.draw(google.visualization.arrayToDataTable(getData), options);
+}
+
+// Draw the line char
     //Assign the right url to urlAddress by clicking different buttons
     $( "#current_year" ).click(function() {
-    $.ajax({
-              url: "/historicalprice/AAPL/current_year",
-              type: "GET",
-              success: function(result){
 
-                var length = result.length;
-                for(i=0;i<length;i++){
-                getData.push([result[length-i-1].date,result[length-i-1].close]);
-                 $("#cureve_chart").empty();
-                 //drawChart(getData);
-                  } // forloop
-                },
-              error:function(err){
-              console.log(err);
-           }
-
-        });
-
-
+ acquireData("AAPL","current_year")
     });
 
     $( "#prev_year" ).click(function() {
 
-    $.ajax({
-              url: "/historicalprice/AAPL/prev_year",
-              type: "GET",
-              success: function(result){
-
-                var length = result.length;
-                for(i=0;i<length;i++){
-                getData.push([result[length-i-1].date,result[length-i-1].close]);
-                  $("#cureve_chart").empty();
-                  drawChart(getData);
-                  } // forloop
-                },
-              error:function(err){
-              console.log(err);
-           }
-
-        });
-
-
+acquireData("AAPL","prev_year")
     });
 
      $( "#one_month" ).click(function(){
-            $.ajax({
-              url: "/historicalprice/AAPL/current_month",
-              type: "GET",
-              success: function(result){
-
-                var length = result.length;
-                for(i=0;i<length;i++){
-                getData.push([result[length-i-1].date,result[length-i-1].close]);
-                  } // forloop
-                },
-              error:function(err){
-              console.log(err);
-           }
 
         });
               //chart.clearChart();
-              drawChart(getData);
-
-    });
 
     $( "#one_week" ).click(function() {
-    $.ajax({
-              url: "/historicalprice/AAPL/current_week",
-              type: "GET",
-              success: function(result){
 
-                var length = result.length;
-                for(i=0;i<length;i++){
-                getData.push([result[length-i-1].date,result[length-i-1].close]);
-                  } // forloop
-                 chart.clearChart();
-                 chart =  drawChart(getData);
-                },
-              error:function(err){
-              console.log(err);
-           }
+      });
 
-        });
+
     });
-
-    //send ajax request to get previous year data
-    var chart;
-     $.ajax({
-              url: urlAddress,
-              type: "GET",
-              success: function(result){
-
-                var length = result.length;
-                for(i=0;i<length;i++){
-                getData.push([result[length-i-1].date,result[length-i-1].close]);
-                  } // forloop
-                 // console.log(length);
-                 chart =  drawChart(getData);
-                },
-              error:function(err){
-              console.log(err);
-           }
-
-        });
-
-
-    // Draw the line chart
-     google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
-
-      function drawChart(getData) {
-
-        var options = {
-          title: 'Stock Price',
-          curveType: 'function',
-          legend: { position: 'bottom' }
-        };
-        chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-
-        chart.draw(google.visualization.arrayToDataTable(getData), options);
-      }
-
-
-        });
+    // document ready
 
 
 
