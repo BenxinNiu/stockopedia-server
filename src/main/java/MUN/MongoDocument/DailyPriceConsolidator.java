@@ -6,10 +6,14 @@ import org.springframework.data.mongodb.core.index.IndexDirection;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @Document(collection ="price")
 public class DailyPriceConsolidator {
     private String _id;
-    private String asofDate;
+    private String  asofDate;
     private double open;
     private double high;
     private double low;
@@ -19,8 +23,9 @@ public class DailyPriceConsolidator {
     private String ticker;
 
     public DailyPriceConsolidator(String _id, String asofDate, double open, double high, double low, double close, String trade_volume, String snapshot_type, String ticker) {
+        SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
         this._id = _id;
-        this.asofDate = asofDate;
+        this.asofDate=asofDate;
         this.open = open;
         this.high = high;
         this.low = low;
