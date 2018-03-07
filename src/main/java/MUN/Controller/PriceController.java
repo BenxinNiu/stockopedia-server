@@ -29,7 +29,7 @@ public class PriceController {
   private List<price> filterPrice(List<DailyPriceConsolidator> price_list){
       List<price> result= new ArrayList<>();
       for (DailyPriceConsolidator data : price_list){
-          result.add(new price(data.getAsofDate(),data.getOpen(),data.getClose()));
+          result.add(new price(data.getAsofDate().toString(),data.getOpen(),data.getClose()));
       }
   return result;
   }

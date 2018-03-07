@@ -8,10 +8,30 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 public class FetchPriceData {
+
+ public static Comparator<DailyPriceConsolidator> dateComparator = new Comparator<DailyPriceConsolidator>() {
+     @Override
+     public int compare(DailyPriceConsolidator o1, DailyPriceConsolidator o2) {
+        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+         try {
+        Date d1=sdf.parse(o1.getAsofDate());
+        Date d2= sdf.parse(o2.getAsofDate());
+         return d1.compareTo(d2);
+         }
+         catch (ParseException e){
+             e.getCause();
+         }
+
+         return 0;
+     }
+ };
 
 @Autowired
     private DailyPriceCollectionRepo priceRepo;
@@ -22,7 +42,9 @@ public List<DailyPriceConsolidator> queryByType (String ticker,String snapshot_t
     BooleanExpression filterByType= query.snapshot_type.eq(snapshot_type);
 
      List<DailyPriceConsolidator> result = (List<DailyPriceConsolidator>) priceRepo.findAll(filterByTicker.and(filterByType));
-System.out.println(result.size());
+
+    Collections.sort(result,dateComparator);
+
      return result;
 }
 
