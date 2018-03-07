@@ -20,7 +20,7 @@ $(document).ready(function(){
                 for(i=0;i<length;i++){
                 getData.push([result[length-i-1].date,result[length-i-1].close]);
                  $("#cureve_chart").empty();
-                 drawChart(getData);
+                 //drawChart(getData);
                   } // forloop
                 },
               error:function(err){
@@ -86,15 +86,14 @@ $(document).ready(function(){
                 for(i=0;i<length;i++){
                 getData.push([result[length-i-1].date,result[length-i-1].close]);
                   } // forloop
+                 chart.clearChart();
+                 chart =  drawChart(getData);
                 },
               error:function(err){
               console.log(err);
            }
 
         });
-        chart.clearChart();
-        //drawChart(getData);
-
     });
 
     //send ajax request to get previous year data
