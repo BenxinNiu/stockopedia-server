@@ -7,31 +7,32 @@
 $(document).ready(function(){
 
   google.charts.load('current', {'packages':['corechart']});
-  //google.charts.setOnLoadCallback(drawChart());
-
-    // var getData= [['time','price']];
-    // var urlAddress = "/historicalprice/AAPL/current_year";
-
 
 function acquireData(ticker, type){
+  var x = "/historicalprice/" +ticker +"/" + type;
   $.ajax({
             url: "/historicalprice/" +ticker +"/" + type,
             type: "GET",
             success: function(result){
               var getData=[['time','price']];
               var length = result.length;
+              if(result.length == 0)
+                alert("opppppsss");
+              else{
               for(i=0;i<length;i++){
-              getData.push([result[length-i-1].date,result[length-i-1].close]);
-              // $("#cureve_chart").empty();
-               drawChart(getData);
+              getData.push([result[i].date,result[i].close]);
                 } // forloop
+                 drawChart(getData);
+              }
               },
             error:function(err){
               console.log("errorssss");
             console.log(err);
          }
 
+
       });
+  console.log(x);
 }
 //default display
 
@@ -54,47 +55,83 @@ var chart=  new google.visualization.LineChart(document.getElementById('curve_ch
 // Draw the line char
     //Assign the right url to urlAddress by clicking different buttons
     $( "#current_year" ).click(function() {
-
+         var ticker = $("#input").val();
+         if(ticker=="")
          acquireData("AAPL","current_year")
+         else
+         acquireData(ticker,"current_year");
+
     });
 
     $( "#prev_year" ).click(function() {
-
-         acquireData("AAPL","prev_year")
+         var ticker = $("#input").val();
+         if(ticker=="")
+         acquireData("AAPL","prev_year");
+         else
+         acquireData(ticker,"prev_year")
     });
 
      $( "#one_month" ).click(function(){
-         acquireData("AAPL","current_month")
+         var ticker = $("#input").val();
+         if(ticker=="")
+         acquireData("AAPL","current_month");
+         else
+         acquireData(ticker,"current_month")
 
         });
               //chart.clearChart();
 
     $( "#one_week" ).click(function() {
+        var ticker = $("#input").val();
+         if(ticker=="")
          acquireData("AAPL","tmp");
+         else
+         acquireData(ticker,"tmp");
+      });
+
+    $( "#search" ).click(function() {
+         var ticker = $("#input").val();
+         acquireData(ticker,"tmp");
 
       });
 
 
-    });
-    // document ready
+    });//document ready funtion
 
-
+// search function
 
 
 </script>
     <head>
         <link rel="stylesheet" href="index.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
    </head>
 <body>
-<h1>Stockopedia</h1>
+<!--nav bar -->
+<ul>
+
+  <li><a class="active real-li" href="#home">Home</a></li>
+  <li><a href="#Transaction" class="real-li">Transaction</a></li>
+  <li><a href="#Investment" class="real-li">Investment</a></li>
+
+  <li style="float:right"><a href="#about"><form class="navbar-form nav bar-left" action="">
+            <div class="form-group">
+                <input type="text" class="form-control" id="input" placeholder="Search">
+            </div>
+            <button type="submit" class="btn btn-default search" id="search">Search</button>
+        </form></a></li>
+</ul>
+<!--display the title-->
+<!--display google chart-->
 <div id="curve_chart" style="width: 900px; height: 500px"></div>
     <div class="btn-group container">
         <div class="row">
                <button id="current_year">Current Year</button>
                <button id="prev_year">Previous Year</button>
-                <button id="one_week"> One Week</button>
-                <button id="one_month"> One Month</button>
+               <button id="one_week"> 10 Days</button>
+              <button id="one_month"> Current Month</button>
         </div>
     </div>
 

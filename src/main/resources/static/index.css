@@ -1,5 +1,11 @@
 
 
+.title{
+    font-size:25px;
+    font-family: sans-serif;
+    padding:60px,60px;
+}
+
 .btn-group button {
     background-color: black; /* Green background */
     border: 1px solid black; /* Green border */
@@ -25,3 +31,58 @@
 .btn-group button:hover {
     background-color: #3e8e41;
 }
+
+/*nav bar style */
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li {
+    float: left;
+    border-right:1px solid #bbb;
+    padding:5px,25px;
+}
+.real-li{
+    padding:20px,30px;
+    margin-top: 15px;
+}
+
+li:last-child {
+    border-right: none;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover:not(.active) {
+    background-color: #111;
+}
+
+.active {
+    background-color: black;
+}
+.search{
+    border: solid;
+    color: balck;
+    padding: 2px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin:5px;
+}
+.form-group{
+    margin-top:10px;
+}
+
+
