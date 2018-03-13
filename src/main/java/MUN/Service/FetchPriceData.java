@@ -1,12 +1,18 @@
 package MUN.Service;
 
 
+import MUN.Factory.DataPoint;
+import MUN.Factory.price;
 import MUN.MongoDocument.DailyPriceConsolidator;
 import MUN.MongoDocument.QDailyPriceConsolidator;
 import MUN.MongoRepo.DailyPriceCollectionRepo;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -35,6 +41,43 @@ public class FetchPriceData {
 
 @Autowired
     private DailyPriceCollectionRepo priceRepo;
+
+public List<price> getRealtimeData(String ticker) {
+    String url="https://api.iextrading.com/1.0/stock/" + ticker + "/chart/1d";
+    RestTemplate restTemplate=new RestTemplate();
+
+    ResponseEntity<List<DataPoint>> data_mins=
+            restTemplate.exchange(url,
+                    HttpMethod.GET, null, new ParameterizedTypeReference<List<DataPoint>>() {
+                    });
+
+//    DataPoint[] forNow = restTemplate.getForObject(url, DataPoint[].class);
+//    return Arrays.asList(forNow);
+
+    List<DataPoint>api_result = data_mins.getBody();
+
+
+    return format_real_time_data(api_result);
+
+}
+
+private List<price> format_real_time_data(List<DataPoint> list) {
+
+    List<price> result = new ArrayList<>();
+    for (DataPoint data : list) {
+        String asOfDate = data.getLabel();
+        double high, low;
+        if (data.getHigh() == 0 || data.getHigh() == -1) {
+            high = data.getMarketHigh();
+            low = data.getMarketLow();
+        } else {
+           high=data.getHigh();
+           low=data.getLow();
+        }
+        result.add(new price(asOfDate,high,low));
+    }
+    return result;
+}
 
 public List<DailyPriceConsolidator> queryByType (String ticker,String snapshot_type){
     QDailyPriceConsolidator query = new QDailyPriceConsolidator("price");
