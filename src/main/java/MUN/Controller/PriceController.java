@@ -1,5 +1,6 @@
 package MUN.Controller;
 
+import MUN.Factory.DataPoint;
 import MUN.Factory.price;
 import MUN.MongoDocument.DailyPriceConsolidator;
 import MUN.Service.FetchPriceData;
@@ -32,6 +33,11 @@ public class PriceController {
           result.add(new price(data.getAsofDate().toString(),data.getOpen(),data.getClose()));
       }
   return result;
+  }
+
+  @RequestMapping("/real-time/{ticker}")
+    public List<price> getRealtimeQuotes(@PathVariable("ticker") String ticker){
+      return subscriber.getRealtimeData(ticker);
   }
 
 }
