@@ -21,8 +21,8 @@ input[type=text]:focus, input[type=password]:focus {
 .signup {
     background-color: green;
     color: white;
-    padding: 14px 10px;
-    margin: 8px ;
+    padding: 5px 10px;
+    margin:0;
     border: none;
     cursor: pointer;
     padding:20px 30px;
@@ -36,11 +36,11 @@ button:hover {
 /* Extra styles for the cancel button */
 .cancelbtn {
     padding: 14px 20px;
-    background-color: #f44336;
+    background-color: #ccc;
 }
 
 /* Float cancel and signup buttons and add an equal width */
-.cancelbtn, .signupbtn {
+.cancelbtn, #signupbtn {
   float: left;
   width: 50%;
 }
@@ -54,6 +54,7 @@ button:hover {
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
+    overflow: auto;
     z-index: 1; /* Sit on top */
     left: 0;
     top: 0;
@@ -61,15 +62,15 @@ button:hover {
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
     background-color: #474e5d;
-    padding-top: 50px;
+    padding-top: 20px;
 }
 
 /* Modal Content/Box */
 .modal-content {
-    background-color: #fefefe;
+    background-color:#fefefe;
     margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
     border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+    width: 70%; /* Could be more or less, depending on screen size */
 }
 
 /* Style the horizontal ruler */
@@ -179,10 +180,10 @@ li a:hover:not(.active) {
 .active {
     background-color: black;
 }
-.search{
+#search{
     border: solid;
     color: balck;
-    padding: 2px 32px;
+    padding:auto;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -190,7 +191,7 @@ li a:hover:not(.active) {
     margin:5px;
 }
 .form-group{
-    margin-top:10px;
+    margin-top:0px;
 }
 
 
