@@ -23,7 +23,7 @@ $(document).ready(function(){
           success: function(result){
           	alert(result);
           },
-          error: funtion(result){
+          error: function(result){
           	alert(result);
           }
 
@@ -141,8 +141,9 @@ var chart=  new google.visualization.LineChart(document.getElementById('curve_ch
       });
 
     $( "#search" ).click(function() {
-         var ticker = $("#input").val();
-         acquireData(ticker,"tmp");
+         // var ticker = $("#input").val();
+         // acquireData(ticker,"tmp");sear
+         send_info();
 
       });
 

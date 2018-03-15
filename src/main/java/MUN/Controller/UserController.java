@@ -26,7 +26,7 @@ public class UserController {
     FetchUser subscriber;
 
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute("userForm") UserForm form){
+    public String registerUser(@ModelAttribute("test") UserForm form){
         SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
         String now =sdf.format(new Date());
         List<Asset> user_asset= new ArrayList<>();
