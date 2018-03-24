@@ -9,25 +9,34 @@ import MUN.MongoDocument.UserConsolidator;
 import MUN.MongoDocument.UserTransactionConsolidator;
 import MUN.Service.FetchUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class UserController {
 
     @Autowired
-    FetchUser subscriber;
+    private FetchUser subscriber;
 
-    @PostMapping("/register")
+
+    @RequestMapping(value="/update_user_test")
+    public void test(){
+        UserConsolidator user = subscriber.find_user("123@mun.ca").get(0);
+
+        subscriber.update_user(user,user);
+    }
+
+
+    @RequestMapping(value="/register", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public String registerUser(@RequestBody UserForm form){
+        System.out.println("hello");
         System.out.println(form.getFirstName());
         SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
         String now =sdf.format(new Date());

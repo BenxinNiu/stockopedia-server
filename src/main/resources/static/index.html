@@ -7,7 +7,6 @@
 $(document).ready(function(){
 
   google.charts.load('current', {'packages':['corechart']});
-
   // send signup info
   function send_info(){
   	var test = {
@@ -20,22 +19,17 @@ $(document).ready(function(){
           url:"/register",
           type: "POST",
           data: test,
-          contentType: "text/plain",
+          contentType: "json",
           success: function(result){
-          	console.log("success ")
-          	//alert(result);
+          	alert(result);
           },
           error: function(result){
-          	console.log("errors")
-          	//alert(result);
+          	alert(result);
           }
 
       
       });
 }
-
-
-
 
 function acquireData(ticker, type){
   //var x = "/real/" +ticker +"/" + type;
@@ -139,8 +133,11 @@ var chart=  new google.visualization.LineChart(document.getElementById('curve_ch
             
 
     $( "#one_week" ).click(function() {
-        console.log("sent");
-        send_info();
+        var ticker = $("#input").val();
+         if(ticker=="")
+         acquireData("AAPL","tmp");
+         else
+         acquireData(ticker,"tmp");
       });
 
     $( "#search" ).click(function() {
@@ -160,7 +157,7 @@ var chart=  new google.visualization.LineChart(document.getElementById('curve_ch
          // 	alert("The passwards entered are not the same");
          // else
          // alert(psw+" "+repsw);
-       send_info();
+         test();
 
       });
 

@@ -30,8 +30,8 @@ public class FetchUser {
     public void  update_user(UserConsolidator user_updated,UserConsolidator user){
         //QUserConsolidator query = new QUserConsolidator("user");
         //BooleanExpression match_id=query._id.eq(user.get_id());
-      this.userRepo.delete(user);
-      this.userRepo.insert(user_updated);
+      this.userRepo.delete(user.get_id());
+      //this.userRepo.insert(user_updated);
     }
 
 

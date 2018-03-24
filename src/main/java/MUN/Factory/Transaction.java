@@ -7,11 +7,11 @@ public class Transaction {
     private double fullfilled_price;
     private String type;
     private String ticker;
-    private String volume;
+    private int volume;
     private String fullfilled_date;
     private boolean fullfilled;
 
-    public Transaction(String date, String currency, double price, double fullfilled_price, String type, String ticker, String volume, String fullfilled_date, boolean fullfilled) {
+    public Transaction(String date, String currency, double price, double fullfilled_price, String type, String ticker, int volume, String fullfilled_date, boolean fullfilled) {
         Date = date;
         this.currency = currency;
         this.price = price;
@@ -47,7 +47,7 @@ public class Transaction {
         this.ticker = ticker;
     }
 
-    public void setVolume(String volume) {
+    public void setVolume(int volume) {
         this.volume = volume;
     }
 
@@ -83,7 +83,7 @@ public class Transaction {
         return ticker;
     }
 
-    public String getVolume() {
+    public int getVolume() {
         return volume;
     }
 
