@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.text.SimpleDateFormat;
@@ -26,7 +27,8 @@ public class UserController {
     FetchUser subscriber;
 
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute("userForm") UserForm form){
+    public String registerUser(@RequestBody UserForm form){
+        System.out.println(form.getFirstName());
         SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
         String now =sdf.format(new Date());
         List<Asset> user_asset= new ArrayList<>();
