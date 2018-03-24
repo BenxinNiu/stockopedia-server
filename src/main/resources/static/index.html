@@ -8,10 +8,40 @@ $(document).ready(function(){
 
   google.charts.load('current', {'packages':['corechart']});
 
+  // send signup info
+  function send_info(){
+  	var test = {
+  		email: "123@mun.ca",
+  		firstName: "Hello",
+  		lastName: "Duper",
+  		pwd: "12345"
+  	}
+  $.ajax({
+          url:"/register",
+          type: "POST",
+          data: test,
+          contentType: "text/plain",
+          success: function(result){
+          	console.log("success ")
+          	//alert(result);
+          },
+          error: function(result){
+          	console.log("errors")
+          	//alert(result);
+          }
+
+      
+      });
+}
+
+
+
+
 function acquireData(ticker, type){
-  var x = "/historicalprice/" +ticker +"/" + type;
+  //var x = "/real/" +ticker +"/" + type;
   $.ajax({
             url: "/historicalprice/" +ticker +"/" + type,
+            //url: "/real-time/" +ticker,
             type: "GET",
             success: function(result){
               var getData=[['time','price']];
@@ -32,11 +62,38 @@ function acquireData(ticker, type){
 
 
       });
-  console.log(x);
 }
+
+function default_display(ticker){
+  $.ajax({
+            //url: "/historicalprice/" +ticker +"/" + type,
+            url: "/real-time/" +ticker,
+            type: "GET",
+            success: function(result){
+              var getData=[['time','price']];
+              var length = result.length;
+              if(result.length == 0)
+                alert("opppppsss");
+              else{
+              for(i=0;i<length;i++){
+              getData.push([result[i].date,result[i].close]);
+                } // forloop
+                 drawChart(getData);
+              }
+              },
+            error:function(err){
+              console.log("errorssss");
+            console.log(err);
+         }
+
+
+      });
+}
+
 //default display
 
-acquireData("AAPL","tmp");
+default_display("AAPL");
+
 function drawChart(getData) {
 
 var chart=  new google.visualization.LineChart(document.getElementById('curve_chart'));
@@ -79,19 +136,31 @@ var chart=  new google.visualization.LineChart(document.getElementById('curve_ch
          acquireData(ticker,"current_month")
 
         });
-              //chart.clearChart();
+            
 
     $( "#one_week" ).click(function() {
-        var ticker = $("#input").val();
-         if(ticker=="")
-         acquireData("AAPL","tmp");
-         else
-         acquireData(ticker,"tmp");
+        console.log("sent");
+        send_info();
       });
 
     $( "#search" ).click(function() {
-         var ticker = $("#input").val();
-         acquireData(ticker,"tmp");
+         // var ticker = $("#input").val();
+         // acquireData(ticker,"tmp");sear
+         send_info();
+
+      });
+
+//sending signup inforamtion to the server
+    $( "#signupbtn" ).click(function() {
+       
+         // var email = $("#email").val();
+         // var psw = $("#password").val();
+         // var repsw = $("#repasswaord").val();
+         // if(psw !=repsw)
+         // 	alert("The passwards entered are not the same");
+         // else
+         // alert(psw+" "+repsw);
+       send_info();
 
       });
 
@@ -115,17 +184,20 @@ var chart=  new google.visualization.LineChart(document.getElementById('curve_ch
   <li><a class="active real-li" href="#home">Home</a></li>
   <li><a href="#Transaction" class="real-li">Transaction</a></li>
   <li><a href="#Investment" class="real-li">Investment</a></li>
+  <!-- sign up button-->
+  <li><button  class="signup" onclick="document.getElementById('id01').style.display='block'" style="width:auto";>Sign Up</button></li>
 
   <li style="float:right"><a href="#about"><form class="navbar-form nav bar-left" action="">
             <div class="form-group">
                 <input type="text" class="form-control" id="input" placeholder="Search">
             </div>
-            <button type="submit" class="btn btn-default search" id="search">Search</button>
+            <button type="submit" class="search" id="search">Search</button>
         </form></a></li>
 </ul>
 <!--display the title-->
 <!--display google chart-->
-<div id="curve_chart" style="width: 900px; height: 500px"></div>
+    <div id="curve_chart" style="width: 900px; height: 500px">
+    </div>
     <div class="btn-group container">
         <div class="row">
                <button id="current_year">Current Year</button>
@@ -134,6 +206,43 @@ var chart=  new google.visualization.LineChart(document.getElementById('curve_ch
               <button id="one_month"> Current Month</button>
         </div>
     </div>
+    <!--display the sign up form when the button is clicked-->
+    <div id="id01" class="modal">
+  <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+  <form class="modal-content" action="/action_page.php">
+    <div class="container">
+      <h1>Sign Up</h1>
+      <p>Please fill in this form to create an account.</p>
+      <hr>
+     
+      <!-- <label for="first_name"><b>First Name</b></label>
+      <input type="text" placeholder="Enter your first name" name="firstName" id = "firstName" required>
+
+      <label for="last_name"><b>Last Name</b></label>
+      <input type="text" placeholder="Enter your last name" name="lastName" id = "lastName" required> -->
+
+      <label for="email"><b>Email</b></label>
+      <input type="text" placeholder="Enter Email" name="email" id = "email" required>
+
+      <label for="psw"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" name="psw" id = "password" required>
+
+      <label for="psw-repeat"><b>Repeat Password</b></label>
+      <input type="password" placeholder="Repeat Password" name="psw-repeat" id="repasswaord" required>
+      
+      <label>
+        <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
+      </label>
+
+      <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>
+
+      <div class="clearfix">
+        <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+        <button type="submit" id="signupbtn">Sign Up</button>
+      </div>
+    </div>
+  </form>
+</div>
 
 </body>
 </html>
