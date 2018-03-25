@@ -65,7 +65,7 @@ private List<price> format_real_time_data(List<DataPoint> list) {
 
     List<price> result = new ArrayList<>();
     for (DataPoint data : list) {
-        String asOfDate = data.getLabel();
+        String asOfDate = data.getDate()+"-"+data.getLabel();
         double high, low;
         if (data.getHigh() == 0 || data.getHigh() == -1) {
             high = data.getMarketHigh();
