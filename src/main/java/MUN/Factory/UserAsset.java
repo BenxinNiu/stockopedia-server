@@ -37,4 +37,6 @@ public class UserAsset {
     public List<Transaction> getTrans() {
         return trans;
     }
+
+
 }

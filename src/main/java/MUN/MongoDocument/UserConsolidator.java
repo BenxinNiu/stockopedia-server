@@ -35,4 +35,8 @@ public class UserConsolidator {
     public UserAsset getUser_asset() {
         return user_asset;
     }
+
+    public void setUser_asset(UserAsset user_asset) {
+        this.user_asset = user_asset;
+    }
 }

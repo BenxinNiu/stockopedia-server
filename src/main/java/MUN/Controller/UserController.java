@@ -26,13 +26,6 @@ public class UserController {
     private FetchUser subscriber;
 
 
-    @RequestMapping(value="/update_user_test")
-    public void test(){
-        UserConsolidator user = subscriber.find_user("123@mun.ca").get(0);
-
-        subscriber.update_user(user,user);
-    }
-
 
     @RequestMapping(value="/register", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public String registerUser(@RequestBody UserForm form){

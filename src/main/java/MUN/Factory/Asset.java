@@ -41,6 +41,18 @@ public class Asset {
         return currency;
     }
 
+    public void setShares(int shares) {
+        this.shares = shares;
+    }
+
+    public void setBookValue(double bookValue) {
+        this.bookValue = bookValue;
+    }
+
+    public void setBookTotalValue(double bookTotalValue) {
+        this.bookTotalValue = bookTotalValue;
+    }
+
     public Asset() {
 
     }

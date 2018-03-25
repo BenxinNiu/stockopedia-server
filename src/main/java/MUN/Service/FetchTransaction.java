@@ -18,6 +18,11 @@ public class FetchTransaction {
     public List<UserTransactionConsolidator> findAllTrans(){
        return transRepo.findAll();
     }
+    public List<UserTransactionConsolidator> findAllTrans(boolean fullfilled){
+        QUserTransactionConsolidator query = new QUserTransactionConsolidator("trans");
+        BooleanExpression matchByStatus = query.trans.fullfilled.eq(fullfilled);
+        return (List<UserTransactionConsolidator>)this.transRepo.findAll(matchByStatus);
+    }
 
     public List<UserTransactionConsolidator> findByType(String type){
         QUserTransactionConsolidator query = new QUserTransactionConsolidator("trans");
@@ -34,6 +39,11 @@ public class FetchTransaction {
 
     public void saveTrans(UserTransactionConsolidator trans){
         transRepo.save(trans);
+    }
+
+    public void updateTrans(String id, UserTransactionConsolidator trans){
+        this.transRepo.delete(id);
+        this.transRepo.save(trans);
     }
 
 }
