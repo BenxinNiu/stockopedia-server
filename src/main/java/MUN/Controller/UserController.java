@@ -26,32 +26,38 @@ public class UserController {
     private FetchUser subscriber;
 
 
-    @RequestMapping(value="/update_user_test")
-    public void test(){
-        UserConsolidator user = subscriber.find_user("123@mun.ca").get(0);
-
-        subscriber.update_user(user,user);
-    }
 
 
-    @RequestMapping(value="/register", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public String registerUser(@RequestBody UserForm form){
+    @RequestMapping(value = "/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public String registerUser(@RequestBody UserForm form) {
         System.out.println("hello");
         System.out.println(form.getFirstName());
-        SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
-        String now =sdf.format(new Date());
-        List<Asset> user_asset= new ArrayList<>();
-        List<Transaction> user_trans= new ArrayList<>();
-        UserAsset user_asset_form= new UserAsset(60000,user_asset,user_trans);
-        UserConsolidator new_user= new UserConsolidator(form.getEmail(),now,form,user_asset_form);
-        List<UserConsolidator> user_existing= this.subscriber.find_user(form.getEmail());
-        if(user_existing.size()!=0){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+        String now = sdf.format(new Date());
+        List<Asset> user_asset = new ArrayList<>();
+        List<Transaction> user_trans = new ArrayList<>();
+        UserAsset user_asset_form = new UserAsset(60000, user_asset, user_trans);
+        UserConsolidator new_user = new UserConsolidator(form.getEmail(), now, form, user_asset_form);
+        List<UserConsolidator> user_existing = this.subscriber.find_user(form.getEmail());
+        if (user_existing.size() != 0) {
             return "user existed";
-        }
-        else{
+        } else {
             this.subscriber.register_user(new_user);
             return "success";
         }
     }
 
-}
+    @RequestMapping("/userlogin/{email}/{password}")
+    public String userLogin(@PathVariable("email") String email, @PathVariable("password") String password) {
+        List<UserConsolidator> result = subscriber.find_user(email);
+        if (result.size() == 0) {
+            return "User name does not exist";
+        } else {
+            String realpwd = result.get(0).getUser_infor().getPwd();
+            if(realpwd.equals(password))
+                return "you are logged in!";
+             else
+                 return "User name and password do not match, please try again";
+            }
+        }
+    }
