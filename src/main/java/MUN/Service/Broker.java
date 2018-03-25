@@ -40,8 +40,8 @@ public class Broker {
         System.out.println(last_avalible_date);
         System.out.println(last_avalible_time);
         if (marketClosed) {
-            return false;
-           // return tradeOfficer(price_now,trans,now);
+            //return false;
+            return tradeOfficer(price_now,trans,now);
         } else {
         return tradeOfficer(price_now,trans,now);
         }
@@ -67,8 +67,8 @@ public class Broker {
         double total_values=ask_price * trans.getTrans().getVolume();
        if (!now){
            if(ask_price<=quote && user_balance >= total_values) {
-               UserTransactionConsolidator new_trans=updateTrans(quote,trans);
-               clientOfficer("buy",quote,new_trans);
+               UserTransactionConsolidator new_trans=updateTrans(quote,trans);// update trans info
+               clientOfficer("buy",quote,new_trans);//update user info
            result = true;
            }
            else{
@@ -88,7 +88,39 @@ public class Broker {
 
 
     private boolean SellOfficer(double quote, UserTransactionConsolidator trans, boolean now){
-        return false;
+        boolean result;
+        UserConsolidator user  =  user_subscriber.find_user(trans.getUser_id()).get(0);
+        double  sell_price = trans.getTrans().getPrice();
+        boolean findTicker = false;
+        String  sellTicker = trans.getTrans().getTicker();
+        List <Asset> userTrans = user.getUser_asset().getAsset();
+        int availableVol = 0;
+
+        for(int i = 0;i<userTrans.size(); i++){
+            if(userTrans.get(i).getSymbol().equals(sellTicker))
+                findTicker = true;
+                availableVol = userTrans.get(i).getShares();
+        }
+        if(!now){
+             if(sell_price>=quote && findTicker && availableVol>trans.getTrans().getVolume()){
+                 UserTransactionConsolidator new_trans=updateTrans(quote,trans);// update trans info
+                 clientOfficer("sell",quote,new_trans);//update user info
+                 result = true;
+             }
+             else
+                 result = false;
+        }
+        else{
+            if(findTicker && availableVol>=trans.getTrans().getVolume()){
+                UserTransactionConsolidator new_trans=updateTrans(quote,trans);
+                clientOfficer("sell",quote,new_trans);
+                result = true;
+            }
+            else
+                result = false;
+        }
+
+        return result;
     }
 
     private UserTransactionConsolidator updateTrans(double quote,UserTransactionConsolidator trans){
