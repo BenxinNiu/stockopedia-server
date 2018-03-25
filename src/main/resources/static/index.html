@@ -1,245 +1,217 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+
 <head>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
 
-$(document).ready(function(){
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="index page">
+    <meta name="author" content="Benxin Niu">
+  <title>Stockopedia</title>
+    <script src="library/jquery.js"></script>
 
-  google.charts.load('current', {'packages':['corechart']});
-  // send signup info
-  function send_info(){
-  	var test = {
-  		email: "123@mun.ca",
-  		firstName: "Hello",
-  		lastName: "Duper",
-  		pwd: "12345"
-  	}
-  $.ajax({
-          url:"/register",
-          type: "POST",
-          data: test,
-          contentType: "json",
-          success: function(result){
-          	alert(result);
-          },
-          error: function(result){
-          	alert(result);
-          }
+    <script src="library/bootstrap.min.js"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 
-      
-      });
-}
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
-function acquireData(ticker, type){
-  //var x = "/real/" +ticker +"/" + type;
-  $.ajax({
-            url: "/historicalprice/" +ticker +"/" + type,
-            //url: "/real-time/" +ticker,
-            type: "GET",
-            success: function(result){
-              var getData=[['time','price']];
-              var length = result.length;
-              if(result.length == 0)
-                alert("opppppsss");
-              else{
-              for(i=0;i<length;i++){
-              getData.push([result[i].date,result[i].close]);
-                } // forloop
-                 drawChart(getData);
-              }
-              },
-            error:function(err){
-              console.log("errorssss");
-            console.log(err);
-         }
+   <script src="js/index.js"></script>
 
+   <script src="js/functions.js"></script>
+  <!-- <script src="js/validation.js"></script> -->
+    <link href="css/index.css" rel="stylesheet">
 
-      });
-}
+    <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
 
-function default_display(ticker){
-  $.ajax({
-            //url: "/historicalprice/" +ticker +"/" + type,
-            url: "/real-time/" +ticker,
-            type: "GET",
-            success: function(result){
-              var getData=[['time','price']];
-              var length = result.length;
-              if(result.length == 0)
-                alert("opppppsss");
-              else{
-              for(i=0;i<length;i++){
-              getData.push([result[i].date,result[i].close]);
-                } // forloop
-                 drawChart(getData);
-              }
-              },
-            error:function(err){
-              console.log("errorssss");
-            console.log(err);
-         }
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 
+    <link href="css/bootstrap-social.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+</head>
 
-      });
-}
+</html>
 
-//default display
-
-default_display("AAPL");
-
-function drawChart(getData) {
-
-var chart=  new google.visualization.LineChart(document.getElementById('curve_chart'));
-
-  var options = {
-    title: 'Stock Price',
-    curveType: 'function',
-    legend: { position: 'bottom' }
-  };
-
-  chart.clearChart();
-
-  chart.draw(google.visualization.arrayToDataTable(getData), options);
-}
-
-// Draw the line char
-    //Assign the right url to urlAddress by clicking different buttons
-    $( "#current_year" ).click(function() {
-         var ticker = $("#input").val();
-         if(ticker=="")
-         acquireData("AAPL","current_year")
-         else
-         acquireData(ticker,"current_year");
-
-    });
-
-    $( "#prev_year" ).click(function() {
-         var ticker = $("#input").val();
-         if(ticker=="")
-         acquireData("AAPL","prev_year");
-         else
-         acquireData(ticker,"prev_year")
-    });
-
-     $( "#one_month" ).click(function(){
-         var ticker = $("#input").val();
-         if(ticker=="")
-         acquireData("AAPL","current_month");
-         else
-         acquireData(ticker,"current_month")
-
-        });
-            
-
-    $( "#one_week" ).click(function() {
-        var ticker = $("#input").val();
-         if(ticker=="")
-         acquireData("AAPL","tmp");
-         else
-         acquireData(ticker,"tmp");
-      });
-
-    $( "#search" ).click(function() {
-         // var ticker = $("#input").val();
-         // acquireData(ticker,"tmp");sear
-         send_info();
-
-      });
-
-//sending signup inforamtion to the server
-    $( "#signupbtn" ).click(function() {
-       
-         // var email = $("#email").val();
-         // var psw = $("#password").val();
-         // var repsw = $("#repasswaord").val();
-         // if(psw !=repsw)
-         // 	alert("The passwards entered are not the same");
-         // else
-         // alert(psw+" "+repsw);
-         test();
-
-      });
-
-
-    });//document ready funtion
-
-// search function
-
-
-</script>
-    <head>
-        <link rel="stylesheet" href="index.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-
-   </head>
 <body>
-<!--nav bar -->
-<ul>
+  <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
+            <div class="container">
+                <div class="navbar-header page-scroll">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                    </button>
+                    <a class="navbar-brand" href="#page-top">Stockopedia</a>
+                </div>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="hidden">
+                            <a href="#page-top"></a>
+                        </li>
+                        <li class="page-scroll" >
+                            <a id="login_navbar">Login/SignUp</a>
+                        </li>
+                        <li class="page-scroll" id="register_navbar">
+                            <a >About</a>
+                        </li>
+                    </ul>
+<form class="navbar-form nav bar-left" id="search">
+<div class="form-group">
+<input type="text" class="form-control" placeholder="Search company">
+</div>
+<button type="submit" class="btn btn-default">Search</button>
+</form>
 
-  <li><a class="active real-li" href="#home">Home</a></li>
-  <li><a href="#Transaction" class="real-li">Transaction</a></li>
-  <li><a href="#Investment" class="real-li">Investment</a></li>
-  <!-- sign up button-->
-  <li><button  class="signup" onclick="document.getElementById('id01').style.display='block'" style="width:auto";>Sign Up</button></li>
-
-  <li style="float:right"><a href="#about"><form class="navbar-form nav bar-left" action="">
-            <div class="form-group">
-                <input type="text" class="form-control" id="input" placeholder="Search">
+                </div>
             </div>
-            <button type="submit" class="search" id="search">Search</button>
-        </form></a></li>
+        </nav>
+
+<div class="container" >
+<div class="dummy">
+  <span class='user_id' id='benxin'> </span>
+</div>
+
+<div id="login_page" class="row hidden" style="margin-top:100px;">
+<div class="col-lg-9">
+  <form class="navbar-form nav bar-left" id="login">
+  <div class="form-group" style="margin-bottom:10px;">
+  <input id="user_name" type="text" class="form-control" placeholder="User name">
+  </div>
+  <br>
+  <div class="form-group" style="margin-bottom:10px;">
+  <input id="pwd" type="password" class="form-control" placeholder="Password">
+  </div>
+  <br>
+  <button id="login_button" class="btn btn-default" >Login</button>
+  <a id="signup_button"  class="btn btn-default" >signup</a>
+  </form>
+</div>
+</div>
+<div id="signup_page" class="row hidden" style="margin-top:100px;">
+<div class="col-lg-9">
+  <form class="navbar-form nav bar-left" id="signup">
+  <div class="form-group" style="margin-bottom:10px;">
+  <input id="signup_user_name" type="text" class="form-control" placeholder="User name">
+  </div>
+  <br>
+  <div class="form-group" style="margin-bottom:10px;">
+  <input id="signup_pwd1" type="password" class="form-control" placeholder="Password">
+  </div>
+  <br>
+  <div class="form-group" style="margin-bottom:10px;">
+  <input id="signup_pwd2" type="password" class="form-control" placeholder="Reenter Password">
+  </div>
+  <br>
+  <button id="signup_submit"  class="btn btn-default" >signup</button>
+  </form>
+</div>
+</div>
+
+<div class="row">
+<div class="col-lg-9" id="main-section">
+<div class="small-notification" id="current_company">
+  <span sytle="font-color:Grey;"> Market summary -> </span>
+  <span id="company_name" sytle="font-weight:bold;">AAPL </span>
+  <br>
+  <span id="current_time" style="font-size:15px !important;">2018-03-25 10:30 AM</span>
+  <br>
+  <span id="current_quote" style="color:red;">265.3 USD</span>
+</div>
+<ul class="button-group list-unstyled">
+    <li><a class="quote_button btn btn-default" id="current_year">Today</a></li>
+    <li><a class="quote_button btn btn-default" id="current_year">Current year</a></li>
+    <li><a class="quote_button btn btn-default" id="current_year">Previous year</a></li>
+    <li><a class="quote_button btn btn-default" id="current_year">10 Days</a></li>
+    <li><a class="quote_button btn btn-default" id="current_year">Current month</a></li>
 </ul>
-<!--display the title-->
-<!--display google chart-->
-    <div id="curve_chart" style="width: 900px; height: 500px">
-    </div>
-    <div class="btn-group container">
-        <div class="row">
-               <button id="current_year">Current Year</button>
-               <button id="prev_year">Previous Year</button>
-               <button id="one_week"> 10 Days</button>
-              <button id="one_month"> Current Month</button>
-        </div>
-    </div>
-    <!--display the sign up form when the button is clicked-->
-    <div id="id01" class="modal">
-  <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-  <form class="modal-content" action="/action_page.php">
-    <div class="container">
-      <h1>Sign Up</h1>
-      <p>Please fill in this form to create an account.</p>
-      <hr>
-     
-      <!-- <label for="first_name"><b>First Name</b></label>
-      <input type="text" placeholder="Enter your first name" name="firstName" id = "firstName" required>
+  <div id="curve_chart" >
+  </div>
 
-      <label for="last_name"><b>Last Name</b></label>
-      <input type="text" placeholder="Enter your last name" name="lastName" id = "lastName" required> -->
+</div>
+<div class="col-lg-3" id="user-section">
+  <h4>User name:  </h4>
+  <span id="user_name_infor">Test name</span>
+  <h4>User id:  </h4>
+  <span id="user_id_infor">Test ID</span>
+  <h4>Acc Balance:  </h4>
+  <span id="user_balance_infor">Test 4000</span>
+  <h4>Num of Transaciton:  </h4>
+  <span id="user_trans_infor">Test 6</span>
+  <h4>Num of fulfilled:  </h4>
+  <span id="user_fulfilled_trans_infor">Test 3</span>
+  <h4>Num of Asset:  </h4>
+  <span id="user_asset_infor">Test 3</span>
 
-      <label for="email"><b>Email</b></label>
-      <input type="text" placeholder="Enter Email" name="email" id = "email" required>
+  <br>
+  <a class="btn btn-default" style="min-width:200px; margin-top:13px;">Asset Management</a>
+  <a class="btn btn-default" style="min-width:200px; margin:10px auto 8px auto;">Transaction Management</a>
+</div>
 
-      <label for="psw"><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="psw" id = "password" required>
+</div>
 
-      <label for="psw-repeat"><b>Repeat Password</b></label>
-      <input type="password" placeholder="Repeat Password" name="psw-repeat" id="repasswaord" required>
-      
-      <label>
-        <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
-      </label>
-
-      <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>
-
-      <div class="clearfix">
-        <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
-        <button type="submit" id="signupbtn">Sign Up</button>
-      </div>
-    </div>
+<div class="row">
+<div id="transaction-submission" class="col-lg-12" style="height:auto; margin-top:20px;">
+  <h3> File new Transaction</h3>
+  <form class="navbar-form nav bar-left" id="submit-transaction">
+  <div class="form-group">
+  <input type="text" class="form-control" placeholder="Symbol">
+  </div>
+  <div class="form-group">
+  <input type="text" class="form-control" placeholder="Price">
+  </div>
+  <div class="form-group">
+  <input type="text" class="form-control" placeholder="Volume">
+  </div>
+  <button type="submit" class="btn btn-default">Sell now</button>
+    <button type="submit" class="btn btn-default">Buy now</button>
+      <button type="submit" class="btn btn-default">Ask</button>
+        <button type="submit" class="btn btn-default">Put</button>
   </form>
 </div>
 
+
+<div class="row">
+  <div id="transaction-section" class="col-lg-12" style="height:auto; margin-top:20px; margin-left:10px;">
+  <h3>Transaction History</h3>
+<div class="transaction">
+  <h4 style="margin-left:15px;"> AAPL </h4>
+  <h5 style="margin-left:15px;"> Successful: True</h5>
+  <h5 style="margin-left:15px;"> Type: Buy </h5>
+  <h5 style="margin-left:15px;">Fulfilled date: 2018-03-25 18:23:21</h5>
+  <h5 style="margin-left:15px;">Fulfilled price: 265.3</h5>
+  <h5 style="margin-left:15px;">Fulfilled volume: 50</h5>
+  </div>
+  </div>
+</div>
+
+<div class="row">
+  <div id="Asset-section" class="col-lg-12" style="height:auto; margin-top:20px; margin-left:10px;">
+  <h3>Asset Statistics</h3>
+<div class="asset">
+  <h4 style="margin-left:15px;"> AAPL </h4>
+  <h5 style="margin-left:15px;"> Book Value: 165.03</h5>
+  <h5 style="margin-left:15px;"> Book value total: 3300.6</h5>
+  <h5 style="margin-left:15px;">Sahres: 200</h5>
+  </div>
+  </div>
+</div>
+
+
 </body>
-</html>
+<footer class="footer" style="margin-top:30px;">
+<div class="row">
+  <div class='col-md-4 left'>
+
+</div>
+<div class='col-md-4 mid'>
+<h3 style="text-align:center;">Copyright © Awesome Asians </h3>
+<h4 style="text-align:center;">ENGI5895 @ beta 1.0.2</h4>
+
+
+<p style="text-align:center;"><a>About this website</a></p>
+<p style="text-align:center;"><a>Development team</a></p>
+<p style="text-align:center;"><a>Join our team</a></p>
+</div>
+<div class='col-md-4 right'>
+
+</div>
+</div>
+</footer>
