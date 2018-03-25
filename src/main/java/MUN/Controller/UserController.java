@@ -48,16 +48,18 @@ public class UserController {
     }
 
     @RequestMapping("/userlogin/{email}/{password}")
-    public String userLogin(@PathVariable("email") String email, @PathVariable("password") String password) {
+    public List<UserConsolidator> userLogin(@PathVariable("email") String email, @PathVariable("password") String password) {
         List<UserConsolidator> result = subscriber.find_user(email);
         if (result.size() == 0) {
-            return "User name does not exist";
+            return result;
         } else {
             String realpwd = result.get(0).getUser_infor().getPwd();
             if(realpwd.equals(password))
-                return "you are logged in!";
-             else
-                 return "User name and password do not match, please try again";
+                return result;
+             else{
+            List<UserConsolidator>  a = new ArrayList<>();
+            return a;
+             }
             }
         }
     }
