@@ -2,38 +2,34 @@
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="index page">
     <meta name="author" content="Benxin Niu">
-  <title>Stockopedia</title>
+    <title>Stockopedia</title>
 
-  <script src="library/jquery.js"></script>
-  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="library/jquery.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
-  <script type="text/javascript">
+    <script type="text/javascript">
     google.charts.load('current', {packages: ['corechart']});
-  </script>
+    </script>
 
     <script src="library/bootstrap.min.js"></script>
     <link href="css/bootstrap.min.css" rel="stylesheet">
-
-<script src="js/functions.js"></script>
-   <script src="js/index.js"></script>
-
-
+    <script src="js/functions.js"></script>
+    <script src="js/index.js"></script>
   <!-- <script src="js/validation.js"></script> -->
     <link href="css/index.css" rel="stylesheet">
     <link href="css/bootstrap-social.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
 </head>
 
 </html>
-
+ <!--Main Body -->
 <body>
+<!--Navigation bar -->
   <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
             <div class="container">
                 <div class="navbar-header page-scroll">
@@ -64,12 +60,14 @@
                 </div>
             </div>
         </nav>
+<!--Navigation bar end-->
 
+<!--Main container TODO:: DO NOT add code out side of this container -->
 <div class="container" >
-<div class="dummy">
-</div>
+<div class="dummy"></div>
 
-<div id="login_page" class="row hidden" style="margin-top:100px;">
+<!--Login section-->
+<div class="row hidden" id="login_page" style="margin-top:100px;">
 <div class="col-lg-9">
   <form class="navbar-form nav bar-left" id="login">
   <div class="form-group" style="margin-bottom:10px;">
@@ -85,8 +83,8 @@
   </form>
 </div>
 </div>
-
-<div id="signup_page" class="row hidden" style="margin-top:100px;">
+<!-- signup page -->
+<div class="row hidden" id="signup_page" style="margin-top:100px;">
 <div class="col-lg-9">
   <form class="navbar-form nav bar-left" id="signup">
   <div class="form-group" style="margin-bottom:10px;">
@@ -105,7 +103,7 @@
   </form>
 </div>
 </div>
-
+<!-- main section and user information section -->
 <div class="row">
 <div class="col-lg-9" id="main-section">
 <div class="small-notification" id="current_company">
@@ -149,7 +147,7 @@
 </div>
 
 </div>
-
+<!-- submit new transaction page -->
 <div class="row">
 <div id="transaction-submission" class="col-lg-12" style="height:auto; margin-top:20px;">
   <h3> File new Transaction</h3>
@@ -170,21 +168,27 @@
   </form>
 </div>
 </div>
-
+<!-- Transaction history section -->
 <div class="row">
   <div id="transaction-section" class="col-lg-12" style="height:auto; margin-top:20px; margin-left:10px;">
   <h3>Transaction History</h3>
   </div>
 </div>
-
+<!-- asset statistic section -->
 <div class="row">
   <div id="Asset-section" class="col-lg-12" style="height:auto; margin-top:20px; margin-left:10px;">
   <h3>Asset Statistics</h3>
   </div>
 </div>
 
+<!-- TODO::::Add new section below or in between each sections-->
+
 </div>
+<!-- main container end -->
 </body>
+<!-- MAin body end-->
+
+<!-- accreditation footer -->
 <footer class="footer" style="margin-top:30px;">
 <div class="row">
   <div class='col-md-4 left'>
