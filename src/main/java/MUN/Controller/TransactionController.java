@@ -26,6 +26,7 @@ public class TransactionController {
 
     @RequestMapping(value="/submitTransaction", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public String sumbitTransaction(@RequestBody TransactionSubmissionForm form) {
+        System.out.println("trying to submit transaction");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
         String now = sdf.format(new Date());
         Transaction user_trans = new Transaction(now, "CAD", form.getPrice(), 0, form.getType(), form.getSymbol(), form.getVolume(), "N/A", false);

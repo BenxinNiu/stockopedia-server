@@ -1,9 +1,24 @@
 $(document).ready(function(){
+var pull_interval=80000;
 
+var symbol="AAPL";
+
+var my_infor_interval;
+
+acquireData(symbol,"tmp",true);
+var myInterval= setInterval(()=>{
+   console.log("Refreshing " +symbol);
+   acquireData(symbol,"tmp",true); }, pull_interval);
 
 
 $("#search").submit((e)=>{
   e.preventDefault();
+  symbol=$("#search_bar").val();
+  acquireData(symbol,"tmp",true);
+   clearInterval(myInterval);
+  myInterval= setInterval(()=>{
+console.log("Refreshing " +symbol);
+    acquireData(symbol,"tmp",true) }, pull_interval);
   return false;
 })
 
@@ -11,6 +26,22 @@ $("#submit-transaction").submit((e)=>{
   e.preventDefault();
   return false;
 })
+
+$(".submit_trans_button").click(function(){
+  var type=this.id;
+  console.log(type);
+  switch (type){
+    case "sell_now": submit_transactions("sell",false);
+    break;
+    case "buy_now": submit_transactions("buy","false");
+    break;
+    case "ask": submit_transactions("buy",true);
+    break;
+    case "put": submit_transactions("sell",true);
+    break;
+  }
+})
+
 
 
 $("#login").submit((e)=>{
@@ -49,5 +80,18 @@ $("#signup_button").on('click',()=>{
 
 })
 
+$('.quote_button').click(function() {
+   var type = this.id;
+   if(type!="real_time") {
+clearInterval(myInterval);
+acquireData(symbol,type,false);
+   }
+   else{
+     acquireData(symbol,"tmp",true);
+     myInterval= setInterval(()=>{
+       console.log("Refreshing " +symbol);
+       acquireData(symbol,"tmp",true) }, pull_interval);
+   }
+});
 
 });

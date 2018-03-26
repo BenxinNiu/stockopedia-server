@@ -9,25 +9,26 @@
     <meta name="description" content="index page">
     <meta name="author" content="Benxin Niu">
   <title>Stockopedia</title>
-    <script src="library/jquery.js"></script>
+
+  <script src="library/jquery.js"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+  <script type="text/javascript">
+    google.charts.load('current', {packages: ['corechart']});
+  </script>
 
     <script src="library/bootstrap.min.js"></script>
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
-<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
+<script src="js/functions.js"></script>
    <script src="js/index.js"></script>
 
-   <script src="js/functions.js"></script>
+
   <!-- <script src="js/validation.js"></script> -->
     <link href="css/index.css" rel="stylesheet">
-
-    <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
-
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
-
     <link href="css/bootstrap-social.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+
 </head>
 
 </html>
@@ -55,7 +56,7 @@
                     </ul>
 <form class="navbar-form nav bar-left" id="search">
 <div class="form-group">
-<input type="text" class="form-control" placeholder="Search company">
+<input id="search_bar" type="text" class="form-control" placeholder="Search company">
 </div>
 <button type="submit" class="btn btn-default">Search</button>
 </form>
@@ -113,14 +114,16 @@
   <br>
   <span id="current_time" style="font-size:15px !important;">2018-03-25 10:30 AM</span>
   <br>
-  <span id="current_quote" style="color:red;">265.3 USD</span>
+  <span id="current_quote">265.3 USD </span>
+
+  <span id="current_change"></span>
 </div>
 <ul class="button-group list-unstyled">
-    <li><a class="quote_button btn btn-default" id="current_year">Today</a></li>
+    <li><a class="quote_button btn btn-default" id="real_time">Today</a></li>
     <li><a class="quote_button btn btn-default" id="current_year">Current year</a></li>
-    <li><a class="quote_button btn btn-default" id="current_year">Previous year</a></li>
-    <li><a class="quote_button btn btn-default" id="current_year">10 Days</a></li>
-    <li><a class="quote_button btn btn-default" id="current_year">Current month</a></li>
+    <li><a class="quote_button btn btn-default" id="prev_year">Previous year</a></li>
+    <li><a class="quote_button btn btn-default" id="tmp">10 Days</a></li>
+    <li><a class="quote_button btn btn-default" id="current_month">Current month</a></li>
 </ul>
   <div id="curve_chart" >
   </div>
@@ -152,18 +155,18 @@
   <h3> File new Transaction</h3>
   <form class="navbar-form nav bar-left" id="submit-transaction">
   <div class="form-group">
-  <input type="text" class="form-control" placeholder="Symbol">
+  <input id="symbol_trans" type="text" class="form-control" placeholder="Symbol">
   </div>
   <div class="form-group">
-  <input type="text" class="form-control" placeholder="Price">
+  <input id="price_trans" value=0 type="text" class="form-control" placeholder="Price">
   </div>
   <div class="form-group">
-  <input type="text" class="form-control" placeholder="Volume">
+  <input id="volume_trans" type="text" class="form-control" placeholder="Volume">
   </div>
-  <button type="submit" class="btn btn-default">Sell now</button>
-    <button type="submit" class="btn btn-default">Buy now</button>
-      <button type="submit" class="btn btn-default">Ask</button>
-        <button type="submit" class="btn btn-default">Put</button>
+  <a  class="submit_trans_button btn btn-default" id="sell_now">Sell now</a>
+    <a  class="submit_trans_button btn btn-default" id="buy_now">Buy now</a>
+      <a class="submit_trans_button btn btn-default" id="ask">Ask</a>
+        <a class="submit_trans_button btn btn-default" id="put">Put</a>
   </form>
 </div>
 
