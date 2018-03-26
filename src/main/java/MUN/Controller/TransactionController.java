@@ -25,6 +25,7 @@ public class TransactionController {
     private Broker middleman;
 
     @RequestMapping(value="/submitTransaction", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
     public String sumbitTransaction(@RequestBody TransactionSubmissionForm form) {
         System.out.println("trying to submit transaction");
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
@@ -40,10 +41,16 @@ public class TransactionController {
         if(result){
             return "transaction successful";
         }
-        else
+        else {
+            middleman.update_user_record(final_trans);
             return "transaction unsuccessful";
         }
-        return "submission success";
+        }
+        else{
+            middleman.update_user_record(final_trans);
+            return "submission success";
+        }
+
     }
 
 

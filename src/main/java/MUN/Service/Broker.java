@@ -25,6 +25,18 @@ public class Broker {
     @Autowired
     private FetchTransaction trans_subscriber;
 
+    public void update_user_record(UserTransactionConsolidator trans){
+        UserConsolidator user=user_subscriber.find_user(trans.getUser_id()).get(0);
+        UserAsset user_asset=user.getUser_asset();
+        Transaction unfullfilled_trans=trans.getTrans();
+        List<Transaction> user_transactions=user_asset.getTrans();
+
+        user_transactions.add(unfullfilled_trans);
+        user_asset.setTrans(user_transactions);
+        user.setUser_asset(user_asset);
+        user_subscriber.update_user(user.get_id(),user);
+    }
+
     public boolean execute(UserTransactionConsolidator trans, boolean now) {
         String ticker = trans.getTrans().getTicker();
         List<price> price = price_subscriber.getRealtimeData(ticker);
@@ -34,14 +46,14 @@ public class Broker {
         String today = sdf.format(new Date());
         String last_avalible_date = price_now.getDate().substring(0, price_now.getDate().lastIndexOf("-"));
         String last_avalible_time = price_now.getDate().substring(price_now.getDate().lastIndexOf("-") + 1);
-        boolean marketClosed =!(last_avalible_date.equals(today) && last_avalible_time.equals("3:59 PM"));
-        System.out.println(marketClosed);
+        boolean marketopen =(last_avalible_date.equals(today) && !last_avalible_time.equals("3:59 PM"));
+        System.out.println("market open: " + marketopen);
         System.out.println(today);
         System.out.println(last_avalible_date);
         System.out.println(last_avalible_time);
-        if (marketClosed) {
-            //return false;
-            return tradeOfficer(price_now,trans,now);
+        if (!marketopen) {
+            return false;
+            //return tradeOfficer(price_now,trans,now);
         } else {
         return tradeOfficer(price_now,trans,now);
         }

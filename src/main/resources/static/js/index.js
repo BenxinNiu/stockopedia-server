@@ -87,6 +87,7 @@ clearInterval(myInterval);
 acquireData(symbol,type,false);
    }
    else{
+     clearInterval(myInterval);
      acquireData(symbol,"tmp",true);
      myInterval= setInterval(()=>{
        console.log("Refreshing " +symbol);
