@@ -25,9 +25,6 @@ public class UserController {
     @Autowired
     private FetchUser subscriber;
 
-
-
-
     @RequestMapping(value = "/register", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public String registerUser(@RequestBody UserForm form) {
         System.out.println("hello");
