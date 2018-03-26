@@ -1,5 +1,64 @@
 console.log("hello")
 
+function signup(infor){
+var email= '"' + infor.email + '"' ;
+var firstName= '"' + infor.firstName + '"' ;
+var lastName=  '"' + infor.lastName + '"' ;
+var pwd='"' + infor.pwd + '"' ;
+  $.ajax({
+          url:"/register",
+          type: "POST",
+          contentType:'application/json',
+          processData:false,
+          //data:'{"user_id": "test_acc@mun.ca","symbol":"AAPL","type":"buy","bid":"false","price":"0","volume":"20"}',
+          data:'{"email":' +  email +',"firstName":' + firstName + ',"lastName":'  + lastName + ',"pwd":' + pwd + '}',
+          headers: {
+"Content-Type":"application/json"
+},
+          success: (result)=>{
+            if(result=="success")
+           login_and_update(email.replace('"',"").replace('"',""),pwd.replace('"',"").replace('"',""));
+           else if(result=="user existed")
+           alert("This email has been used")
+          },
+          error: (err)=>{
+           alert("Server is experiencing some trouble");
+          }
+
+      });
+}
+
+
+function acquireNews(ticker){
+$.ajax({
+   url:"/news/"+ticker,
+   type:"GET",
+   success: function(list){
+  updateNews(list);
+   },
+   error: function(error){
+     alert("Server is having some troubles");
+   }
+});
+
+}
+
+function updateNews(news){
+  $("#news-section").empty();
+  $("#news-section").append("<h3>Company News</h3>");
+news.forEach((a)=>{
+var date=a.datetime;
+var headline=a.headline;
+var source=a.source;
+var link=a.url;
+$("#news-section").append("<div class='news'>" +
+"<p class='news_source'>"+source+" : </p>" +
+"<a class='news_link' href="+link+">" + headline + "</a>" +
+"<p class='news_date'>"+date+"</p> <br>" +
+ "</div>");
+});
+}
+
 function submit_transactions(type,bid){
   var user= $(".user_id_dummy").attr('id')
   var user_id='"' + $(".user_id_dummy").attr('id') + '"';
@@ -146,8 +205,7 @@ function drawChart(getData) {
 
 function update_summary(ticker,prices){
   var now= new Date();
-  var time_now=now.getFullYear() + "-" + now.getMonth() + "-" + now.getDay() + " "
-  + now.getHours() + ":" + now.getMinutes() + ":" + now.getSeconds();
+  var time_now=prices[prices.length-1][0];
 var change;
 var prev_q = prices[prices.length-2][1];
 var now_q = prices[prices.length-1][1];
@@ -184,14 +242,14 @@ function acquireData(ticker, type, real_time){
               var getData=[['time','price']];
               var length = result.length;
               if(result.length == 0)
-                alert("opppppsss");
+                alert("no company found");
               else{
-
               for(i=0;i<length;i++){
                 if(parseFloat(result[i].close) > 0)
               getData.push([result[i].date,result[i].close]);
                 } // forloop
                  drawChart(getData);
+                 acquireNews(ticker);
                  update_summary(ticker, getData);
               }
               },

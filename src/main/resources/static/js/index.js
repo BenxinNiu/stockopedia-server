@@ -42,6 +42,15 @@ $(".submit_trans_button").click(function(){
   }
 })
 
+$("#check_news").click(()=>{
+  if($("#news-section").hasClass("hidden")){
+    $("#news-section").removeClass("hidden");
+  }
+  else{
+    $("#news-section").addClass("hidden");
+  }
+})
+
 
 
 $("#login").submit((e)=>{
@@ -55,7 +64,18 @@ $("#login").submit((e)=>{
 
 $("#signup").submit((e)=>{
   e.preventDefault();
-  console.log("hello")
+if($("#signup_pwd1").val()!==$("#signup_pwd2").val()){
+  alert("Password do not match");
+}
+else{
+  var form= {
+    "email": $("#signup_email").val(),
+    "firstName":$("#signup_firstname").val(),
+    "lastName":$("#signup_lastname").val(),
+    "pwd":$("#signup_pwd1").val()
+  }
+signup(form);
+}
   return false;
 })
 

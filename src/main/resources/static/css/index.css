@@ -56,6 +56,14 @@ li:hover{
 
   height: auto;
 }
+#news-section{
+  box-shadow: 0 0 1px 0 rgba(0,0,0, 0.25),
+				0 3px 3px 0 rgba(0,0,0, 0.15);
+  border:1px solid black;
+  border-radius: 8px;
+
+  height: auto;
+}
 #Asset-section{
   box-shadow: 0 0 1px 0 rgba(0,0,0, 0.25),
 				0 3px 3px 0 rgba(0,0,0, 0.15);
