@@ -8,23 +8,22 @@ margin-top:16px;
 }
 .navbar-brand, .navbar-right, .navbar-toggle{
 margin-top:10px;
-  font-size:1.5em;
+font-size:1.5em;
 }
 .small-notification{
   width:80%;
   height:auto;
   font-size:1.4em;
 }
-#main-section{
-
+#main-section{ 
   margin-top:120px;
   height:auto;
 }
 #curve_chart{
   position:relative;
-  width:95%;
-  height:500px;
-  background-color: lightblue;
+  width:90%;
+  height:450px;
+  background-color:blue;
   margin-top:70px;
 }
 .button-group{
@@ -41,12 +40,14 @@ li:hover{
 }
 #user-section{
   box-shadow: 0 0 1px 0 rgba(0,0,0, 0.25),
-				0 3px 3px 0 rgba(0,0,0, 0.15);
-  border:1px solid black;
+			      	0 3px 3px 0 rgba(0,0,0, 0.15);
+  border:2px solid grey;
   border-radius: 8px;
-
-  margin-top:280px;
+  margin-top:328px;
   height: auto;
+  background: black;
+  opacity:0.5;
+  color:white;
 }
 #transaction-section{
   box-shadow: 0 0 1px 0 rgba(0,0,0, 0.25),
@@ -61,7 +62,6 @@ li:hover{
 				0 3px 3px 0 rgba(0,0,0, 0.15);
   border:1px solid black;
   border-radius: 8px;
-
   height: auto;
 }
 #Asset-section{
@@ -83,4 +83,8 @@ li:hover{
 }
 .hidden{
   display:none;
+}
+body{
+  background-image:url("backpic.jpg");
+  background-repeat:no-repeat;
 }
