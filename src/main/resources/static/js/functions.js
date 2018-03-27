@@ -203,7 +203,7 @@ function drawChart(getData) {
   chart.draw(data, options);
 }
 
-function update_summary(ticker,prices){
+function update_summary(ticker,prices,infor){
   var now= new Date();
   var time_now=prices[prices.length-1][0];
 var change;
@@ -221,36 +221,47 @@ else{
   $("#current_change").css("color","red");
   $("#current_change").html(change);
 }
-$("#company_name").html(ticker.toUpperCase());
+$("#dummy_ticker").empty();
+$("#dummy_ticker").append("<span class='ticker_dymmy hidden' id='" + infor.symbol + "'> </span>")
+$("#company_name").html(infor.companyName+ " "+infor.symbol);
+$("#exchange").html(infor.exchange);
+$("#ceo").html(infor.ceo);
 $("#current_quote").html("$"+prices[prices.length-1][1]);
-$("#current_time").html(time_now);
-$("#current_change").html()
+$("#current_time").html(prices[prices.length-1][0]);
 }
 
 function acquireData(ticker, type, real_time){
   //var x = "/real/" +ticker +"/" + type;
   var uri;
   if(real_time)
-  uri= "/real-time/" +ticker;
+  uri= "/real-time/";
   else
-  uri="/historicalprice/" +ticker +"/" + type;
+  uri="/historicalprice/";
 
   $.ajax({
             url:uri,
-            type: "GET",
-            success: function(result){
+            type: "POST",
+            processData:false,
+            contentType:'application/json',
+            data:'{"query":' + '"'+  ticker + '"' + ',"type":' + '"'+ type + '"' + '}',
+            headers: {
+               "Content-Type":"application/json"
+             },
+            success: function(res){
+              var result=res[0];
+              console.log(result);
               var getData=[['time','price']];
-              var length = result.length;
-              if(result.length == 0)
+              var length = result.price.length;
+              if(length == 0)
                 alert("no company found");
               else{
               for(i=0;i<length;i++){
-                if(parseFloat(result[i].close) > 0)
-              getData.push([result[i].date,result[i].close]);
+                if(parseFloat(result.price[i].close) > 0)
+              getData.push([result.price[i].date,result.price[i].close]);
                 } // forloop
                  drawChart(getData);
                  acquireNews(ticker);
-                 update_summary(ticker, getData);
+                 update_summary(ticker, getData,result.information);
               }
               },
             error:function(err){

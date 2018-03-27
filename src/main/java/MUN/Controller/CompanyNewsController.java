@@ -1,12 +1,10 @@
 package MUN.Controller;
+import MUN.Factory.CompanyInformation;
 import MUN.Factory.News;
 import MUN.Service.FetchNews;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 import java.util.List;
@@ -18,7 +16,14 @@ public class CompanyNewsController {
     @Autowired
     FetchNews subscriber;
 
+
+    @RequestMapping(value="/company/{ticker}")
+    public CompanyInformation getInfor(@PathVariable("ticker") String ticker){
+        return subscriber.getCompanyInformation(ticker);
+    }
+
 @RequestMapping(value="/news/{symbol}")
+
     public List<News> acquireNews(@PathVariable("symbol") String symbol){
   return subscriber.getNews(symbol);
 }
