@@ -221,11 +221,12 @@ else{
   $("#current_change").css("color","red");
   $("#current_change").html(change);
 }
-$("#dummy_ticker").empty();
-$("#dummy_ticker").append("<span class='ticker_dymmy hidden' id='" + infor.symbol + "'> </span>")
+
+$(".dummy_ticker").empty();
+$(".dummy_ticker").append("<span class='ticker_dymmy hidden' id='" + infor.symbol + "'> </span>")
 $("#company_name").html(infor.companyName+ " "+infor.symbol);
 $("#exchange").html(infor.exchange);
-$("#ceo").html(infor.ceo);
+$("#ceo").html("Industry: "+infor.industry);
 $("#current_quote").html("$"+prices[prices.length-1][1]);
 $("#current_time").html(prices[prices.length-1][0]);
 }
@@ -253,15 +254,15 @@ function acquireData(ticker, type, real_time){
               var getData=[['time','price']];
               var length = result.price.length;
               if(length == 0)
-                alert("no company found");
+                alert("No Data Avalible for this type, This has been added to wanted list");
               else{
               for(i=0;i<length;i++){
                 if(parseFloat(result.price[i].close) > 0)
               getData.push([result.price[i].date,result.price[i].close]);
                 } // forloop
-                 drawChart(getData);
-                 acquireNews(ticker);
                  update_summary(ticker, getData,result.information);
+                 drawChart(getData);
+                 acquireNews($(".ticker_dymmy").attr('id'));
               }
               },
             error:function(err){

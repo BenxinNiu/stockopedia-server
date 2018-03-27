@@ -103,7 +103,7 @@ $("#signup_button").on('click',()=>{
 $('.quote_button').click(function() {
    var type = this.id;
    if(type!="real_time") {
-
+console.log($(".ticker_dymmy").attr('id'))
 clearInterval(myInterval);
 acquireData($(".ticker_dymmy").attr('id'),type,false);
    }

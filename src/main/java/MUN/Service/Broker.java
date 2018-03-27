@@ -83,6 +83,11 @@ public class Broker {
                clientOfficer("buy",quote,new_trans);//update user info
            result = true;
            }
+           else if(ask_price>quote && user_balance >=quote*trans.getTrans().getVolume()){
+               UserTransactionConsolidator new_trans=updateTrans(quote,trans);// update trans info
+               clientOfficer("buy",quote,new_trans);//update user info
+               result = true;
+           }
            else{
                result = false;
            }
