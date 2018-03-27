@@ -260,9 +260,9 @@ function acquireData(ticker, type, real_time){
                 if(parseFloat(result.price[i].close) > 0)
               getData.push([result.price[i].date,result.price[i].close]);
                 } // forloop
-                 drawChart(getData);
-                 acquireNews(ticker);
                  update_summary(ticker, getData,result.information);
+                 drawChart(getData);
+                 acquireNews($(".ticker_dymmy").attr('id'));
               }
               },
             error:function(err){
