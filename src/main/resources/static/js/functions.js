@@ -64,7 +64,7 @@ function submit_transactions(type,bid){
   var user_id='"' + $(".user_id_dummy").attr('id') + '"';
   var pwd=$(".user_pwd_dymmy").attr('id');
 
-if(user_id==undefined){
+if(user_id==undefined || user_id=="\"undefined\""){
   alert("Please sign in first");
 }
 else{
@@ -119,7 +119,7 @@ function login_and_update(username, pwd){
 }
 
 function update_information(user_infor){
-
+$(".dummy").empty();
 $(".dummy").append("<span class='user_id_dummy hidden' id='" + user_infor._id + "'> </span>")
 $(".dummy").append("<span class='user_pwd_dymmy hidden' id='" + user_infor.user_infor.pwd + "'> </span>")
 

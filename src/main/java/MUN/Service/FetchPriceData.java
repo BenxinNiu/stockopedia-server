@@ -12,6 +12,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
@@ -45,7 +46,7 @@ public class FetchPriceData {
 public List<price> getRealtimeData(String ticker) {
     String url="https://api.iextrading.com/1.0/stock/" + ticker + "/chart/1d";
     RestTemplate restTemplate=new RestTemplate();
-
+try{
     ResponseEntity<List<DataPoint>> data_mins=
             restTemplate.exchange(url,
                     HttpMethod.GET, null, new ParameterizedTypeReference<List<DataPoint>>() {
@@ -55,9 +56,12 @@ public List<price> getRealtimeData(String ticker) {
 //    return Arrays.asList(forNow);
 
     List<DataPoint>api_result = data_mins.getBody();
-
-
-    return format_real_time_data(api_result);
+return format_real_time_data(api_result);
+}
+catch(HttpStatusCodeException exception){
+    System.out.println("no comapny found 404");
+return new ArrayList<>();
+}
 
 }
 
