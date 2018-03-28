@@ -134,8 +134,8 @@ user_infor.user_asset.trans.forEach((a)=>{
 })
 
 var num_asset=user_infor.user_asset.asset.length;
-$("").html(user_infor.user_infor.lastName + " " + user_infor.user_infor.firstName)
 $("#login_navbar").html(user_infor.user_infor.lastName + " " + user_infor.user_infor.firstName)
+$("#user_name_infor").html(user_infor.user_infor.lastName + " " + user_infor.user_infor.firstName)
 $("#user_id_infor").html(user_infor._id)
 $("#user_balance_infor").html("$ " + balance)
 $("#user_trans_infor").html(num_trans)
