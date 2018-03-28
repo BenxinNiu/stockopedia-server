@@ -134,8 +134,8 @@ user_infor.user_asset.trans.forEach((a)=>{
 })
 
 var num_asset=user_infor.user_asset.asset.length;
-
-$("#user_name_infor").html(user_infor.user_infor.lastName + " " + user_infor.user_infor.firstName)
+$("").html(user_infor.user_infor.lastName + " " + user_infor.user_infor.firstName)
+$("#login_navbar").html(user_infor.user_infor.lastName + " " + user_infor.user_infor.firstName)
 $("#user_id_infor").html(user_infor._id)
 $("#user_balance_infor").html("$ " + balance)
 $("#user_trans_infor").html(num_trans)
@@ -183,7 +183,7 @@ $("#Asset-section").append(
   '<h4 style="margin-left:15px;">' + ticker + '</h4>' +
   '<h5 style="margin-left:15px;"> Book Value: ' +bookValue+ '</h5>' +
   '<h5 style="margin-left:15px;"> Book value total: ' + bookTotalValue + '</h5>' +
-  '<h5 style="margin-left:15px;">Sahres: ' + shares + '</h5>' +
+  '<h5 style="margin-left:15px;">Shares: ' + shares + '</h5>' +
   '</div>');
 });
 
@@ -194,19 +194,20 @@ function drawChart(getData) {
 
   var data = google.visualization.arrayToDataTable(getData);
   var options = {
-    series: {
-                0: { color: '#228B22' },
+    width: 770,
+    height: 445,
+    series: { 0: { color: '#228B22' },
               },
     title: 'Stock Price',
     curveType: 'function',
     backgroundColor: {
-    'fill':'#000000'},
+    'fill':'#000000',
+    'opacity':'0.5'},
     legendTextStyle: { color: '#FFF' },
     titleTextStyle: { color: '#FFF' },
     vAxis: {
         textStyle:{color: '#FFF'}
     },
-    opacity:'0.5',
     legend: { position: 'bottom' }
   };
   var chart=  new google.visualization.LineChart(document.getElementById('curve_chart'));
@@ -220,17 +221,25 @@ function update_summary(ticker,prices,infor){
 var change;
 var prev_q = prices[prices.length-2][1];
 var now_q = prices[prices.length-1][1];
-if(now>prev_q){
-change=((now_q - prev_q)/prev_q)*100;
-change=change.toString()+"%";
+prev_q = parseFloat(prev_q);
+prev_q = prev_q.toFixed(2);
+now_q = parseFloat(now_q);
+now_q = now_q.toFixed(2);
+change = now_q - prev_q;
+if(change>=0){
+//change=now_q - prev_q;
+change = change.toFixed(2);
 $("#current_change").css("color","green");
-$("#current_change").html(change);
+change="+"+change.toString()+"USD";
+$("#current_change").css("color","green");
+$("#current_change").html("  "+change);
 }
 else{
-  change=((prev_q-now_q)/prev_q)*100;
-  change=change.toString()+"%";
+  //change=prev_q-now_q;
+  change = change.toFixed(2);
+  change=change.toString()+"USD";
   $("#current_change").css("color","red");
-  $("#current_change").html(change);
+  $("#current_change").html("  "+change);
 }
 
 $(".dummy_ticker").empty();

@@ -112,6 +112,7 @@
 </div>
 </div>
 <!-- main section and user information section -->
+<div class="section-1">
 <div class="row">
 <div class="col-lg-9" id="main-section">
 <div class="small-notification" id="current_company">
@@ -128,38 +129,39 @@
 
   <span id="current_change"></span>
 </div>
-<ul class="button-group list-unstyled">
-    <li><a class="quote_button btn btn-primary" id="real_time">Today</a></li>
-    <li><a class="quote_button btn btn-primary" id="current_year">Current year</a></li>
-    <li><a class="quote_button btn btn-primary" id="prev_year">Previous year</a></li>
-    <li><a class="quote_button btn btn-primary" id="tmp">10 Days</a></li>
-    <li><a class="quote_button btn btn-primary" id="current_month">Current month</a></li>
-</ul>
+
   <div id="curve_chart" >
   </div>
-
+    <ul class="button-group list-unstyled">
+        <li><a class="quote_button btn btn-primary" id="real_time">Today</a></li>
+        <li><a class="quote_button btn btn-primary" id="current_year">Current year</a></li>
+        <li><a class="quote_button btn btn-primary" id="prev_year">Previous year</a></li>
+        <li><a class="quote_button btn btn-primary" id="tmp">10 Days</a></li>
+        <li><a class="quote_button btn btn-primary" id="current_month">Current month</a></li>
+    </ul>
 </div>
 <div class="col-lg-3" id="user-section">
   <h4>User name:  </h4>
-  <span id="user_name_infor">Test name</span>
+  <span id="user_name_infor"></span>
   <h4>User id:  </h4>
-  <span id="user_id_infor">Test ID</span>
+  <span id="user_id_infor"></span>
   <h4>Acc Balance:  </h4>
-  <span id="user_balance_infor">Test 4000</span>
+  <span id="user_balance_infor"></span>
   <h4>Num of Transaciton:  </h4>
-  <span id="user_trans_infor">Test 6</span>
+  <span id="user_trans_infor"></span>
   <h4>Num of fulfilled:  </h4>
-  <span id="user_fulfilled_trans_infor">Test 3</span>
+  <span id="user_fulfilled_trans_infor"></span>
   <h4>Num of Asset:  </h4>
-  <span id="user_asset_infor">Test 3</span>
+  <span id="user_asset_infor"></span>
 
   <br>
   <a href="#Asset-section" class="btn btn-default" style="min-width:200px; margin-top:13px;">Asset Management</a>
   <a href="#transaction-section" class="btn btn-default" style="min-width:200px; margin:10px auto 8px auto;">Transaction Management</a>
+  </div>
+  </div>
 </div>
-
-</div>
-    <a id="check_news" class="btn btn-default">Check News</a>
+<div class="section-2">
+    <a id="check_news" class="btn btn-primary">Check News</a>
     <div class="row">
         <div id="news-section" class="hidden col-lg-10" style="height:auto; margin-top:20px;"></div>
     </div>
@@ -178,10 +180,10 @@
   <div class="form-group">
   <input id="volume_trans" type="text" class="form-control" placeholder="Volume">
   </div>
-  <a  class="submit_trans_button btn btn-primary" id="sell_now">Sell now</a>
-    <a  class="submit_trans_button btn btn-primary" id="buy_now">Buy now</a>
-      <a class="submit_trans_button btn btn-primary" id="ask">Ask</a>
-        <a class="submit_trans_button btn btn-primary" id="put">Put</a>
+  <a  class="submit_trans_button btn btn-primary btn-width" id="sell_now">Sell now</a>
+    <a  class="submit_trans_button btn btn-primary btn-width" id="buy_now">Buy now</a>
+      <a class="submit_trans_button btn btn-primary btn-width" id="ask">Ask</a>
+        <a class="submit_trans_button btn btn-primary btn-width" id="put">Put</a>
   </form>
 </div>
 </div>
@@ -199,7 +201,6 @@
 </div>
 
 <!-- TODO::::Add new section below or in between each sections-->
-
 </div>
 <!-- main container end -->
 </body>
