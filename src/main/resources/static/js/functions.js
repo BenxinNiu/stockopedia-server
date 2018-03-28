@@ -194,8 +194,19 @@ function drawChart(getData) {
 
   var data = google.visualization.arrayToDataTable(getData);
   var options = {
+    series: {
+                0: { color: '#228B22' },
+              },
     title: 'Stock Price',
     curveType: 'function',
+    backgroundColor: {
+    'fill':'#000000'},
+    legendTextStyle: { color: '#FFF' },
+    titleTextStyle: { color: '#FFF' },
+    vAxis: {
+        textStyle:{color: '#FFF'}
+    },
+    opacity:'0.5',
     legend: { position: 'bottom' }
   };
   var chart=  new google.visualization.LineChart(document.getElementById('curve_chart'));
