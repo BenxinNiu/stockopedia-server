@@ -196,10 +196,27 @@ return share_list;
             user_balance=user_balance + fullfilled_trans.getFullfilled_price()*fullfilled_trans.getVolume();
             shares_asset=updateShare_asset(type,user_asset,fullfilled_trans);
         }
+        boolean found=false;
+        List<Transaction> new_user_transactions=new ArrayList<>();
+        for(Transaction a : user_transactions){
+if (a.getDate().equals(fullfilled_trans.getDate())){
+    System.out.println("found !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    a.setFullfilled_price(fullfilled_trans.getFullfilled_price());
+    a.setFullfilled(true);
+    a.setFullfilled_date(fullfilled_trans.getFullfilled_date());
+    a.setPrice(fullfilled_trans.getFullfilled_price());
+     if(!found)
+     new_user_transactions.add(a);
+    found =true;
+}
+else{
+    new_user_transactions.add(a);
+}
+        }
         user_transactions.add(fullfilled_trans);
         user_asset.setAcc_balance(user_balance);
         user_asset.setAsset(shares_asset);
-        user_asset.setTrans(user_transactions);
+        user_asset.setTrans(new_user_transactions);
         user.setUser_asset(user_asset);
         user_subscriber.update_user(user.get_id(),user);
         trans_subscriber.updateTrans(trans.getTrans_id(),trans);

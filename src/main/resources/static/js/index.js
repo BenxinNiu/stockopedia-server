@@ -31,13 +31,13 @@ $(".submit_trans_button").click(function(){
   var type=this.id;
   console.log(type);
   switch (type){
-    case "sell_now": submit_transactions("sell",false);
+    case "sell_now": submit_transactions("sell","false");
     break;
     case "buy_now": submit_transactions("buy","false");
     break;
-    case "ask": submit_transactions("buy",true);
+    case "ask": submit_transactions("buy","true");
     break;
-    case "put": submit_transactions("sell",true);
+    case "put": submit_transactions("sell","true");
     break;
   }
 })
