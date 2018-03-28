@@ -1,44 +1,62 @@
 package MUN.Controller;
 
-import MUN.MongoDocument.TransactionConsolidator;
+
+import MUN.Factory.*;
+import MUN.MongoDocument.UserConsolidator;
+import MUN.MongoDocument.UserTransactionConsolidator;
+import MUN.Service.Broker;
+import MUN.Service.FetchTransaction;
+import MUN.Service.FetchUser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import MUN.Service.FetchTransData;
+import org.springframework.http.MediaType;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
-
-import java.util.Arrays;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @RestController
 public class TransactionController {
+
     @Autowired
-    private FetchTransData subscriber;
+    private FetchTransaction subscriber;
 
-    //TODO:::::::  add OAuth
+    @Autowired
+    private Broker middleman;
+
+    @RequestMapping(value="/submitTransaction", method=RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
+    public String sumbitTransaction(@RequestBody TransactionSubmissionForm form) {
+        System.out.println("trying to submit transaction");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+        String now = sdf.format(new Date());
+        Transaction user_trans = new Transaction(now, "CAD", form.getPrice(), 0, form.getType(), form.getSymbol(), form.getVolume(), "N/A", false);
+        String user_id = form.getUser_id();
+        int serial_num = new Random().nextInt(80000) + 1;
+        String trans_id = now + "-" + serial_num;
+        UserTransactionConsolidator final_trans = new UserTransactionConsolidator(user_id, trans_id, user_trans);
+        subscriber.saveTrans(final_trans);
+        if (!form.getBid()) {
+        boolean result= middleman.execute(final_trans,true);
+        if(result){
+            return "transaction successful";
+        }
+        else {
+            middleman.update_user_record(final_trans);
+            return "transaction unsuccessful";
+        }
+        }
+        else{
+            middleman.update_user_record(final_trans);
+            return "submission success";
+        }
+
+    }
 
 
-   @RequestMapping("/trans/id/{id}")
-   public List<TransactionConsolidator> getTransById(@PathVariable("id") String usrID){
-       return this.subscriber.queryTransByID(usrID);
-   }
 
-   @RequestMapping("/trans/fullfilled/{status}")
-   public List<TransactionConsolidator> getTransByStatus(@PathVariable("status") String status){
-       return this.subscriber.queryTransByFulfilled(status);
-   }
 
-   @RequestMapping("/trans/transtype/{type}")
-   public List<TransactionConsolidator> getTransBytype(@PathVariable ("type") String type){
-       return this.subscriber.queryTransByType(type);
-   }
 
-  @RequestMapping("/trans/user/{ID}/filter")
-    public List<TransactionConsolidator> getTransByusrIDandType (@PathVariable("ID") String usrId,
-                                                                 @RequestParam(value ="type") String type){
-    return this.subscriber.queryByusrIdAndType(usrId,type);
-  }
+
 
 }
